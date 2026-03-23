@@ -3,9 +3,9 @@ spring:
     name: enterprise
 
   datasource:
-    url: jdbc:postgresql://your-supabase-host:5432/postgres?sslmode=require
-    username: postgres
-    password: YOUR_DB_PASSWORD
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
     driver-class-name: org.postgresql.Driver
     hikari:
       maximum-pool-size: 5
@@ -20,6 +20,6 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
 
 jwt:
-  secret: YOUR_JWT_SECRET_KEY_MIN_32_CHARS
+  secret: ${JWT_SECRET}
 server:
   port: ${PORT:8081}
