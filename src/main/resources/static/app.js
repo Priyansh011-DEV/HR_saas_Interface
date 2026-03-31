@@ -555,3 +555,34 @@ function loadMyLeaves() {
     })
     .catch(err => alert("Failed to load leaves ❌ " + err.message));
 }
+
+
+/* =========================
+✨ UI ENHANCEMENTS
+========================= */
+document.addEventListener("DOMContentLoaded", () => {
+
+// Ripple effect
+document.querySelectorAll("button").forEach(btn => {
+    btn.addEventListener("click", function(e) {
+        const circle = document.createElement("span");
+        circle.classList.add("ripple");
+
+        const d = Math.max(this.clientWidth, this.clientHeight);
+        circle.style.width = circle.style.height = d + "px";
+        circle.style.left = e.offsetX - d/2 + "px";
+        circle.style.top = e.offsetY - d/2 + "px";
+
+        this.appendChild(circle);
+        setTimeout(() => circle.remove(), 500);
+    });
+});
+
+});
+
+/* =========================
+⏳ LOADING STATE
+========================= */
+function showLoading(state) {
+document.body.style.opacity = state ? "0.6" : "1";
+}
