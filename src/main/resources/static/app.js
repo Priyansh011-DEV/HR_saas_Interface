@@ -555,27 +555,51 @@ function loadMyLeaves() {
     })
     .catch(err => alert("Failed to load leaves ❌ " + err.message));
 }
+// =========================
+// 📱 SIDEBAR (shared across dashboards)
+// =========================
+
+function toggleSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+    const burger  = document.getElementById('hamburger');
+    if (!sidebar) return;
+    sidebar.classList.toggle('open');
+    overlay.classList.toggle('visible');
+    burger.classList.toggle('open');
+}
+
+function closeSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+    const burger  = document.getElementById('hamburger');
+    if (!sidebar) return;
+    sidebar.classList.remove('open');
+    overlay.classList.remove('visible');
+    burger.classList.remove('open');
+}
+
 function initMobileTouch() {
     document.querySelectorAll('.nav-item').forEach(item => {
-        item.addEventListener('touchend', function(e) {
+        item.addEventListener('touchstart', function(e) {
             e.preventDefault();
             this.click();
-        });
+        }, { passive: false });
     });
 
     const burger = document.getElementById('hamburger');
     if (burger) {
-        burger.addEventListener('touchend', function(e) {
+        burger.addEventListener('touchstart', function(e) {
             e.preventDefault();
             toggleSidebar();
-        });
+        }, { passive: false });
     }
 
     const overlay = document.getElementById('sidebarOverlay');
     if (overlay) {
-        overlay.addEventListener('touchend', function(e) {
+        overlay.addEventListener('touchstart', function(e) {
             e.preventDefault();
             closeSidebar();
-        });
+        }, { passive: false });
     }
 }

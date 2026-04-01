@@ -123,21 +123,6 @@
         if (id === 'my-leaves') loadMyLeaves();
     }
 
-    function toggleSidebar() {
-        const sidebar = document.getElementById('sidebar');
-        const overlay = document.getElementById('sidebarOverlay');
-        const burger  = document.getElementById('hamburger');
-        sidebar.classList.toggle('open');
-        overlay.classList.toggle('visible');
-        burger.classList.toggle('open');
-    }
-
-    function closeSidebar() {
-        document.getElementById('sidebar').classList.remove('open');
-        document.getElementById('sidebarOverlay').classList.remove('visible');
-        document.getElementById('hamburger').classList.remove('open');
-    }
-
     const hour = new Date().getHours();
     const greet = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
     document.getElementById('empGreeting').textContent = greet;
