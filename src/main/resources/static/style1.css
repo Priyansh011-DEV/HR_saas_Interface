@@ -719,3 +719,8 @@ button:disabled { opacity: 0.3; cursor: not-allowed; transform: none; }
     .profile-grid { grid-template-columns: 1fr; }
     .page-title { font-size: 22px; }
 }
+
+.nav-item, .hamburger, button, .logout-btn, .sidebar-overlay {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}

@@ -562,4 +562,20 @@ function initMobileTouch() {
             this.click();
         });
     });
+
+    const burger = document.getElementById('hamburger');
+    if (burger) {
+        burger.addEventListener('touchend', function(e) {
+            e.preventDefault();
+            toggleSidebar();
+        });
+    }
+
+    const overlay = document.getElementById('sidebarOverlay');
+    if (overlay) {
+        overlay.addEventListener('touchend', function(e) {
+            e.preventDefault();
+            closeSidebar();
+        });
+    }
 }
