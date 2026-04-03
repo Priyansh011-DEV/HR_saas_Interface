@@ -35,35 +35,35 @@
         <nav class="sidebar-nav">
             <div class="nav-section-label">Overview</div>
             <div class="nav-item active" onclick="showSection('overview', this)">
-                <span class="nav-icon">📊</span> Dashboard
+                <span class="nav-icon"></span> Dashboard
             </div>
 
             <div class="nav-section-label">People</div>
             <div class="nav-item" onclick="showSection('employees', this)">
-                <span class="nav-icon">👥</span> Employees
+                <span class="nav-icon"></span> Employees
             </div>
             <div class="nav-item" onclick="showSection('add-employee', this)">
-                <span class="nav-icon">➕</span> Add Employee
+                <span class="nav-icon"></span> Add Employee
             </div>
             <div class="nav-item" onclick="showSection('add-hr', this)">
-                <span class="nav-icon">🧑‍💼</span> Add HR
+                <span class="nav-icon"></span> Add HR
             </div>
 
             <div class="nav-section-label">Leave</div>
             <div class="nav-item" onclick="showSection('leave-requests', this)">
-                <span class="nav-icon">📋</span> Leave Requests
+                <span class="nav-icon"></span> Leave Requests
             </div>
             <div class="nav-item" onclick="showSection('my-leaves', this)">
-                <span class="nav-icon">🏖️</span> My Leaves
+                <span class="nav-icon"></span> My Leaves
             </div>
             <div class="nav-item" onclick="showSection('apply-leave', this)">
-                <span class="nav-icon">✍️</span> Apply Leave
+                <span class="nav-icon"></span> Apply Leave
             </div>
         </nav>
 
         <div class="sidebar-footer">
             <button class="logout-btn" onclick="logout()">
-                <span>🚪</span> Logout
+                <span></span> Logout
             </button>
         </div>
     </aside>
@@ -107,7 +107,7 @@
             <div class="card" style="margin: 0 40px;">
                 <h3>All Employees</h3>
                 <div class="data-list" id="employees">
-                    <div class="empty-state"><div class="empty-state-icon">👥</div>Loading employees...</div>
+                    <div class="empty-state"><div class="empty-state-icon"></div>Loading employees...</div>
                 </div>
             </div>
         </div>
@@ -128,7 +128,7 @@
                     <input type="text"     id="empUsername"   placeholder="Username">
                     <input type="password" id="empPassword"   placeholder="Password">
                 </div>
-                <button onclick="addEmployee('EMPLOYEE')">➕ Add Employee</button>
+                <button onclick="addEmployee('EMPLOYEE')">Add Employee</button>
             </div>
         </div>
 
@@ -148,7 +148,7 @@
                     <input type="text"     id="hrUsername"   placeholder="Username">
                     <input type="password" id="hrPassword"   placeholder="Password">
                 </div>
-                <button onclick="addEmployee('HR')">🧑‍💼 Add HR</button>
+                <button onclick="addEmployee('HR')"> Add HR</button>
             </div>
         </div>
 
@@ -161,7 +161,7 @@
             <div class="card" style="margin: 0 40px;">
                 <h3>All Requests</h3>
                 <div class="data-list" id="leaveRequests">
-                    <div class="empty-state"><div class="empty-state-icon">📋</div>Loading leave requests...</div>
+                    <div class="empty-state"><div class="empty-state-icon"></div>Loading leave requests...</div>
                 </div>
             </div>
         </div>
@@ -175,7 +175,7 @@
             <div class="card" style="margin: 0 40px;">
                 <h3>Leave History</h3>
                 <div class="data-list" id="leaveList">
-                    <div class="empty-state"><div class="empty-state-icon">🏖️</div>Loading your leaves...</div>
+                    <div class="empty-state"><div class="empty-state-icon"></div>Loading your leaves...</div>
                 </div>
             </div>
         </div>
@@ -198,7 +198,7 @@
                     <input type="date" id="startDate">
                     <input type="date" id="endDate">
                 </div>
-                <button onclick="applyLeave()">✍️ Submit Application</button>
+                <button onclick="applyLeave()"> Submit Application</button>
             </div>
         </div>
 
