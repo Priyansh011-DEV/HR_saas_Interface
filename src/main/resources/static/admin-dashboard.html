@@ -8,17 +8,14 @@
 </head>
 <body>
 
-<!-- Animated Background -->
 <div class="bg-layer">
     <div class="orb orb-1"></div>
     <div class="orb orb-2"></div>
     <div class="orb orb-3"></div>
 </div>
 
-<!-- Sidebar Overlay (mobile) -->
 <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
 
-<!-- Mobile Topbar -->
 <div class="topbar">
     <button class="hamburger" id="hamburger" onclick="toggleSidebar()">
         <span></span><span></span><span></span>
@@ -29,7 +26,6 @@
 
 <div class="app-shell">
 
-    <!-- Sidebar -->
     <aside class="sidebar" id="sidebar">
         <div class="sidebar-header">
             <div class="sidebar-brand">HR Enterprise</div>
@@ -72,7 +68,6 @@
         </div>
     </aside>
 
-    <!-- Main Content -->
     <main class="main-content">
 
         <!-- OVERVIEW -->
@@ -81,8 +76,8 @@
                 <div class="page-title" id="adminGreeting">Good morning, Admin</div>
                 <div class="page-subtitle">Here's what's happening in your company today.</div>
             </div>
-            <div style="padding: 0 40px; margin-top: 28px;" id="overviewPadding">
-                <div class="stats-row" id="statsRow">
+            <div style="padding: 0 40px; margin-top: 28px;">
+                <div class="stats-row">
                     <div class="stat-card" style="--stat-color: var(--accent)">
                         <div class="stat-value" id="statEmployees">—</div>
                         <div class="stat-label">Total Employees</div>
@@ -212,8 +207,23 @@
 
 <script src="app.js"></script>
 <script>
-    checkAuth();
-    initMobileTouch(); // ← add this
+    document.addEventListener("DOMContentLoaded", () => {
+        checkAuth();
+
+        const hour = new Date().getHours();
+        const greet = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
+        document.getElementById('adminGreeting').textContent = greet + ', Admin';
+
+        Promise.all([
+            fetch(`${BASE_URL}/employees`, { headers: authHeader() }).then(r => r.json()),
+            fetch(`${BASE_URL}/api/leaves/all`, { headers: authHeader() }).then(r => r.json())
+        ]).then(([emps, leaves]) => {
+            document.getElementById('statEmployees').textContent = emps.length;
+            document.getElementById('statPending').textContent   = leaves.filter(l => l.status === 'PENDING').length;
+            document.getElementById('statApproved').textContent  = leaves.filter(l => l.status === 'APPROVED').length;
+            document.getElementById('statHR').textContent        = emps.filter(e => e.user?.role === 'HR').length;
+        }).catch(() => {});
+    });
 
     function showSection(id, navEl) {
         document.querySelectorAll('.content-area').forEach(s => s.classList.remove('active'));
@@ -222,29 +232,10 @@
         if (navEl) navEl.classList.add('active');
         closeSidebar();
 
-        // Lazy load on nav
         if (id === 'employees')      loadEmployees();
         if (id === 'leave-requests') loadLeaves();
         if (id === 'my-leaves')      loadMyLeaves();
     }
-
-    // Greeting
-    const hour = new Date().getHours();
-    const greet = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
-    document.getElementById('adminGreeting').textContent = greet + ', Admin';
-
-    // Load stats on overview
-    Promise.all([
-        fetch(`${BASE_URL}/employees`, { headers: authHeader() }).then(r => r.json()),
-        fetch(`${BASE_URL}/api/leaves/all`, { headers: authHeader() }).then(r => r.json())
-    ]).then(([emps, leaves]) => {
-        document.getElementById('statEmployees').textContent = emps.length;
-        document.getElementById('statPending').textContent   = leaves.filter(l => l.status === 'PENDING').length;
-        document.getElementById('statApproved').textContent  = leaves.filter(l => l.status === 'APPROVED').length;
-        document.getElementById('statHR').textContent        = emps.filter(e => e.user?.role === 'HR').length;
-    }).catch(() => {});
-
-
 </script>
 
 </body>

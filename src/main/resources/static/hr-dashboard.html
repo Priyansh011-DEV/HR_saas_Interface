@@ -180,35 +180,51 @@
 
 <script src="app.js"></script>
 <script>
-    checkAuth();
-    initMobileTouch(); // ← add this
+    document.addEventListener("DOMContentLoaded", () => {
+        checkAuth();
+
+        // Greeting
+        const hour = new Date().getHours();
+        const greet = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
+        document.getElementById('hrGreeting').textContent = greet + ', HR';
+
+        // Stats
+        Promise.all([
+            fetch(`${BASE_URL}/employees`, { headers: authHeader() }).then(r => r.json()),
+            fetch(`${BASE_URL}/api/leaves/all`, { headers: authHeader() }).then(r => r.json())
+        ])
+        .then(([emps, leaves]) => {
+            document.getElementById('statEmployees').textContent = emps.filter(e => e.user?.role === 'EMPLOYEE').length;
+            document.getElementById('statPending').textContent   = leaves.filter(l => l.status === 'PENDING' && l.employeeRole === 'EMPLOYEE').length;
+            document.getElementById('statApproved').textContent  = leaves.filter(l => l.status === 'APPROVED').length;
+        });
+    });
 
     function showSection(id, navEl) {
         document.querySelectorAll('.content-area').forEach(s => s.classList.remove('active'));
         document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+
         document.getElementById('section-' + id).classList.add('active');
         if (navEl) navEl.classList.add('active');
+
         closeSidebar();
 
-        if (id === 'employees')      loadEmployees();
-        if (id === 'leave-requests') loadLeaves();
-        if (id === 'my-leaves')      loadMyLeaves();
+        // 🔥 Load data properly
+        if (id === 'employees') {
+            document.getElementById("employees").innerHTML = "Loading...";
+            loadEmployees();
+        }
+
+        if (id === 'leave-requests') {
+            document.getElementById("leaveRequests").innerHTML = "Loading...";
+            loadLeaves();
+        }
+
+        if (id === 'my-leaves') {
+            document.getElementById("leaveList").innerHTML = "Loading...";
+            loadMyLeaves();
+        }
     }
-
-    // toggleSidebar and closeSidebar are in app.js
-
-    const hour = new Date().getHours();
-    const greet = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
-    document.getElementById('hrGreeting').textContent = greet + ', HR';
-
-    Promise.all([
-        fetch(`${BASE_URL}/employees`, { headers: authHeader() }).then(r => r.json()),
-        fetch(`${BASE_URL}/api/leaves/all`, { headers: authHeader() }).then(r => r.json())
-    ]).then(([emps, leaves]) => {
-        document.getElementById('statEmployees').textContent = emps.filter(e => e.user?.role === 'EMPLOYEE').length;
-        document.getElementById('statPending').textContent   = leaves.filter(l => l.status === 'PENDING' && l.employeeRole === 'EMPLOYEE').length;
-        document.getElementById('statApproved').textContent  = leaves.filter(l => l.status === 'APPROVED').length;
-    }).catch(() => {});
 </script>
 
 </body>

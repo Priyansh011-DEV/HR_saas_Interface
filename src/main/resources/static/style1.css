@@ -252,7 +252,7 @@ body {
 ======================== */
 .topbar {
     display: none;
-    position: fixed;
+    position: relative;
     top: 0; left: 0; right: 0;
     height: 60px;
     background: rgba(10,10,10,0.97);
@@ -262,7 +262,7 @@ body {
     align-items: center;
     justify-content: space-between;
     padding: 0 20px;
-    z-index: 198;
+    z-index: 9999;
 }
 
 .topbar-brand {
@@ -283,6 +283,9 @@ body {
     gap: 4px;
     transition: all 0.2s ease;
     margin: 0;
+    position: relative;
+    z-index: 10000;     /* highest click priority */
+    pointer-events: auto;
 }
 
 .hamburger:hover {
@@ -701,7 +704,20 @@ button:disabled { opacity: 0.3; cursor: not-allowed; transform: none; }
 @media (max-width: 768px) {
     .sidebar { transform: translateX(-100%); }
     .sidebar.open { transform: translateX(0); box-shadow: 4px 0 40px rgba(0,0,0,0.7); }
-    .sidebar-overlay { display: block; }
+    .sidebar-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.5);
+        z-index: 800;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        pointer-events: none;
+
+
+      }
+
+
+
     .topbar { display: flex; }
     .main-content { margin-left: 0; padding-top: 60px; }
     .page-header { padding: 24px 20px 0; }
@@ -723,4 +739,8 @@ button:disabled { opacity: 0.3; cursor: not-allowed; transform: none; }
 .nav-item, .hamburger, button, .logout-btn, .sidebar-overlay {
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
+}
+.sidebar-overlay.visible {
+    opacity: 1;
+    pointer-events: auto; /* only clickable when active */
 }
